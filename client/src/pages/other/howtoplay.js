@@ -22,20 +22,22 @@ const HowToPlay = () => {
                   lasts 10 seconds!
                 </p>
               </div>
-              <a
-                className="cmn--btn active mt-sm-5 mt-4"
-                onClick={() => navigate("/signup")}
-              >
-                Get Started
-              </a>
-              <span style={{ width: "30px" }}></span>
-              <a
-                className="cmn--btn active mt-sm-5 mt-4"
-                onClick={() => navigate(-1)}
-                style={{ width: "170px" }}
-              >
-                BACK
-              </a>
+              <div className='cmn-btn-group'>
+                <a
+                  className="cmn--btn active mt-sm-5 mt-4"
+                  onClick={() => navigate("/signup")}
+                >
+                  Get Started
+                </a>
+                <span style={{ width: "30px" }}></span>
+                <a
+                  className="cmn--btn active mt-sm-5 mt-4"
+                  onClick={() => navigate(-1)}
+                  style={{ width: "170px" }}
+                >
+                  Back
+                </a>
+              </div>
             </div>
             <div className="col-lg-6">
               <div className="aobut-thumb section-thumb">

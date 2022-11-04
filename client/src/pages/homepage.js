@@ -8,10 +8,12 @@ export default function Homepage() {
   return (
     <div className='homepage'>
       <div className='homepage-container'>
-        <div className='row-justify-center'>
-          <div className='how-to-play' onClick={() => navigate('/howtoplay')}></div>
-          <div className='play-now' onClick={() => navigate('/signup')}></div>
-          <div className='rules' onClick={() => navigate('/rules')}></div>
+        <div className='image-button-group'>
+          <div className='row-justify-center'>
+            <div className='how-to-play' onClick={() => navigate('/howtoplay')}></div>
+            <div className='play-now' onClick={() => navigate('/signup')}></div>
+            <div className='rules' onClick={() => navigate('/rules')}></div>
+          </div>
         </div>
       </div>
     </div>

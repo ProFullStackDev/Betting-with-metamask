@@ -7,3 +7,16 @@
     padding-top: 15vh;
     color: white;
 }
+
+@media (max-width: 599px) {
+    .rules-page {
+        padding-top: 8vh;
+    }
+
+    .cmn-btn-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: auto;
+    }
+}
