@@ -7,3 +7,9 @@
     padding-top: 15vh;
     color: white;
 }
+
+@media (max-width: 599px) {
+    .howtoplay {
+        padding-top: 8vh;
+    }
+}

@@ -40,6 +40,8 @@ var credentials = { key: privateKey, cert: certificate };
 
 //-------------
 
+
+
 // var http = require("http").createServer(app);
 // let io = http.listen(PORT, () => {
 //   console.log(`✅ Server is listening on port: ${PORT}`);
@@ -68,9 +70,6 @@ server.on("connection", (socket) => {
     //* create user
     try {
       const p_user = join_User(socket.id, username, room);
-      if (p_user.room == undefined) {
-        p_user = join_User(socket.id, username, room);
-      }
       socket.join(p_user.room);
       let allUsers = broadcastToRoomUsers(p_user.room);
       server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
@@ -102,12 +101,8 @@ server.on("connection", (socket) => {
   //when the user exits the room
   socket.on("discon", () => {
     try {
-      let p_user = get_Current_User(socket.id);
-      if (p_user.room == undefined) {
-        p_user = join_User(socket.id, username, room);
-      }
       //the user is deleted from array of users and a left room message displayed
-      p_user = user_Disconnect(socket.id);
+      const p_user = user_Disconnect(socket.id);
 
       if (p_user) {
         socket.to(p_user.room).emit("discon", {
@@ -121,10 +116,8 @@ server.on("connection", (socket) => {
   });
   socket.on("writing", () => {
     try {
-      let p_user = get_Current_User(socket.id);
-      if (p_user.room == undefined) {
-        p_user = join_User(socket.id, username, room);
-      }
+      const p_user = get_Current_User(socket.id);
+
       let allUsers;
       if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
@@ -136,10 +129,7 @@ server.on("connection", (socket) => {
   socket.on("start", async ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);
     try {
-      let p_user = get_Current_User(socket.id);
-      if (p_user.room == undefined) {
-        p_user = join_User(socket.id, username, room);
-      }
+      const p_user = get_Current_User(socket.id);
       let allUsers = broadcastToRoomUsers(p_user.room);
       if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
         validArray.push(p_user);
@@ -155,6 +145,7 @@ server.on("connection", (socket) => {
           socket.to(allUsers[0].room).emit("startReq", { username });
         }
       }
+      console.log(validArray);
     } catch (error) {
       console.log(error);
     }
@@ -168,9 +159,6 @@ server.on("connection", (socket) => {
       let isSame = false;
       let success = false;
       const p_user = get_Current_User(socket.id);
-      if (p_user.room == undefined) {
-        p_user = join_User(socket.id, username, room);
-      }
       let allUsers = broadcastToRoomUsers(p_user.room);
 
       let userInfo = { user: username, value: bidValue };

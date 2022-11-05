@@ -182,7 +182,14 @@ const GameBoard = () => {
                       onChange={handleCHange}
                     />
                   </div>
-                  <div className="room-price">${amount}</div>
+                  {
+                    (amount === 0.5) ? (
+                      <div className="room-price">$0.50</div>
+                    ) : (
+                      <div className="room-price">${amount}</div>
+                    )
+                  }
+
                 </div>
                 <div className="vs-second">
                   {isFilled ? (
@@ -246,7 +253,7 @@ const GameBoard = () => {
       {winner === {} ? (
         <div />
       ) : (
-        <GameEnd data={winner} username={username}></GameEnd>
+        <GameEnd data={winner} username={username} roomFee={amount}></GameEnd>
       )}
     </>
   );

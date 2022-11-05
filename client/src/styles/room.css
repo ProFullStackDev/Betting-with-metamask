@@ -8,13 +8,12 @@
     box-shadow: -3.828px -3.828px 4px 0px rgb(255 200 39 / 40%),
         3px 5px 6px 0px rgb(255 82 1 / 20%);
     padding: 35px 50px;
-    text-align: center;
     background: transparent;
-    position: relative;
     transition: all ease .3s;
     overflow: hidden;
     z-index: 1;
     margin: 20px;
+    position: relative;
 }
 
 .room:hover {
@@ -28,67 +27,59 @@
 }
 
 .room-container {
-    position: relative;
     z-index: 1;
+    text-align: center;
 }
 
 .image-box {
-    width: 100%;
-    height: 20vh;
-    margin: auto;
+    width: 200px;
+    height: 200px;
     border: 1px solid rgba(255, 255, 255, 0.17);
-    /* background-image: url('../assets/img/prize.png');
-    background-size: 100% 100%; */
     border-radius: 10px;
     background: #2e0327;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: relative;
 }
 
 .room1-img {
     background-image: url('../assets/img/1Coin.png');
-    height: 20vh;
-    width: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
 }
 
 .room2-img {
-    width: 100%;
     background-image: url('../assets/img/2Coin.png');
-    height: 20vh;
     background-position: center;
     background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
 }
 
 .room3-img {
-    width: 100%;
     background-image: url('../assets/img/3Coin.png');
-    height: 20vh;
     background-position: center;
     background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
     background-size: 100% 100%;
 }
 
 .text-white {
     color: white;
-    font-family: Myriad Pro;
 }
 
 .invest-text {
     color: white;
     margin: 1rem;
-    font-family: Myriad Pro;
     font-size: 18px;
 }
 
 .text-price {
     color: #FFC827;
-    font-family: Myriad Pro;
     margin-bottom: 1rem;
     font-size: 30px;
 }
@@ -138,5 +129,10 @@
 @media (max-width: 1399px) and (min-width: 700px) {
     .room {
         width: 250px;
+    }
+
+    .image-box {
+        width: 150px;
+        height: 150px;
     }
 }

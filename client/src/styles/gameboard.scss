@@ -182,6 +182,7 @@
 
 .vs-input {
   background-color: #712450 !important;
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -418,7 +419,7 @@ input[type=number] {
 
   .chat-message {
     @include scrollbars(5px, $backgroundColor, $yellowColor);
-    height: 100%;
+    height: 70%;
     display: flex;
     overflow-y: auto;
     align-content: flex-start;
@@ -429,59 +430,37 @@ input[type=number] {
       padding-left: 0.5rem;
       max-width: 70%;
       margin-left: 0px;
-      height: 50px;
 
       p {
-        color: #b4b6be;
+        color: white;
         font-size: 1rem;
         font-weight: 300;
-        background-color: #250202;
+        background-color: #251111;
         border-radius: 0px 10px 10px 10px;
         padding: 0.5rem;
       }
 
       span {
-        color: #b4b6be;
-        font-size: 0.6rem;
-        padding-left: 0.5rem;
-        font-weight: 200;
-      }
-
-      .inform {
-        background-color: $redColor;
-        display: flex;
-        margin-left: auto;
-        flex-direction: column;
+        padding-left: 0rem;
+        width: 100%;
         padding-right: 0.5rem;
-        margin-right: 10px;
-        max-width: 250px;
-
-        p {
-          color: white;
-          font-size: 1rem;
-          font-weight: 300;
-          background-color: $redColor;
-          border-radius: 0px 10px 10px 10px;
-          padding: 1rem;
-        }
-
-        span {
-          padding-left: 0rem;
-          width: 100%;
-          padding-right: 0.5rem;
-          text-align: end;
-        }
+        text-align: end;
       }
+
+
     }
 
     .mess-right {
+      padding-left: 0.5rem;
+      max-width: 70%;
+      margin-left: 0px;
+      // height: 50px;
+      // margin-top: 5px;
       display: flex;
       margin-left: auto;
       flex-direction: column;
-      padding-right: 0.5rem;
       margin-right: 10px;
-      max-width: 250px;
-      height: 60px;
+      // height: 50px;
 
       p {
         color: white;
@@ -489,7 +468,7 @@ input[type=number] {
         font-weight: 300;
         background-color: $redColor;
         border-radius: 0px 10px 10px 10px;
-        padding: 1rem;
+        padding: 0.5rem;
       }
 
       span {
@@ -502,7 +481,7 @@ input[type=number] {
   }
 
   .send {
-    height: 50px;
+    height: 40px;
     display: flex;
     width: 100%;
 

@@ -50,7 +50,8 @@ function Chat({ username, otheruser, socket }) {
         data.users[0].username === username
           ? pushNewMessage({
             name: data.users[1].username,
-            text: profileNameSpilit(data.users[1].username) + " joined this room",
+            text:
+              profileNameSpilit(data.users[1].username) + " joined this room",
           })
           : console.log("");
       }
@@ -72,7 +73,7 @@ function Chat({ username, otheruser, socket }) {
     return () => {
       setMessages([]);
       setText("");
-      setNewMsg("")
+      setNewMsg("");
     };
   }, []);
 
@@ -102,20 +103,19 @@ function Chat({ username, otheruser, socket }) {
             <div
               key={idx}
               className={
-                item.name === username ? "message" : "message mess-right"
+                item.name === username ? "message" : "mess-right"
               }
             >
               <p>{item.text}</p>
-              <span>{item.username}</span>
             </div>
           );
         })}
         <div ref={messagesEndRef} />
       </div>
       <span style={{ height: "5px" }}></span>
-      {isWriting ? <BeatLoader color="#FFF" margin={2} size={8} /> : <span />}
 
       <span style={{ height: "5px" }}></span>
+      {isWriting ? <BeatLoader color="#FFF" margin={2} size={8} /> : <span />}
 
       <div className="send">
         <input

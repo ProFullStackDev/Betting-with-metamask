@@ -2,7 +2,6 @@ import React from 'react';
 import { useRoutes } from "react-router-dom";
 
 import Homepage from "../pages/homepage";
-import Admin from '../pages/admin';
 ///////////////////others/////////////////////////
 import HowToPlay from "../pages/other/howtoplay";
 import Rule from "../pages/other/rules";
@@ -39,10 +38,6 @@ export default function Router() {
     {
       path: "dashboard/room",
       element: <GameRoom />
-    },
-    {
-      path: "/admin",
-      element: <Admin />
     },
     {
       path: '/rules',

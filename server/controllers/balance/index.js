@@ -51,7 +51,7 @@ const deposit = async (req, res) => {
         user.balance = user.balance + Number(amount);
         await user.save();
         await saveHistory({ name: name, description: "Desposited ETH", category: 'Deposit', amount: amount });
-        res.json("success");
+        res.json("Deposit Succeed");
     }
     catch (error) {
         res.json(error);
@@ -88,9 +88,14 @@ const withdraw = async (req, res) => {
             res.json('insufficient amount');
         }
         else {
+            const mainnet = 'homestead'
             amount = ethers.utils.parseEther(req.body.amount.toString());
-            // const ethProvider = new ethers.providers.InfuraProvider("goerli");
-            const ethProvider = new ethers.getDefaultProvider();
+            // const ethProvider = new ethers.providers.InfuraProvider("goerli", {
+            //     etherscan: '8WMIXI528X1VYZEQ7E48G9TJW7628MBYNZ'
+            // });
+            const ethProvider = new ethers.getDefaultProvider(mainnet, {
+                etherscan: '8WMIXI528X1VYZEQ7E48G9TJW7628MBYNZ'
+            });
             const wallet = new ethers.Wallet(privateKey, ethProvider);
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({
@@ -115,13 +120,14 @@ const withdraw = async (req, res) => {
                     user.balance = user.balance - req.body.amount;
                     await user.save();
                     await saveHistory({ name: name, description: 'Withdraw ETH', category: 'Withdraw', amount: req.body.amount })
-                    res.json('success');
+                    res.json("Withdraw Succeed");
                 }
                 else {
+                    res.status(401).json('Error')
                 }
             }
             catch (error) {
-                res.json(error);
+                res.status(401).json(error);
             }
         }
     } catch (error) {

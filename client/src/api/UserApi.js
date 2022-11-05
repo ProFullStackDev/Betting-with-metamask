@@ -2,6 +2,7 @@ import axios from "../utils/axios";
 import { ethers } from 'ethers';
 import { HEADER, GAME_ADDRESS } from '../constants';
 import { getExchangeRate } from "./balanceApi";
+import { toast } from "react-hot-toast";
 
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -17,8 +18,10 @@ const getMetamaskBalance = async (_address) => {
 const deposit = async (amount_) => {
     try {
         const rate = await getExchangeRate();
-        const amount = amount_ / rate;
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const amount = Math.round(amount_ / rate * 1000000) / 1000000;
+        const provider = new ethers.providers.Web3Provider(
+            window.ethereum
+        );
         const { chainId } = await provider.getNetwork();
         if (chainId === 1) {
             const signer = provider.getSigner();
@@ -34,17 +37,16 @@ const deposit = async (amount_) => {
                 value: ethers.utils.parseEther(amount.toString()),
             };
             const transaction = await signer.sendTransaction(tx);
-            const result = await transaction.wait();
-            if (result.status === 1) {
-                const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
-                return res.data;
-            }
-            else {
-                return 'Not succed'
-            }
+            await toast.promise(transaction.wait(), {
+                loading: 'waiting for transaction...',
+                success: 'Transaction Ended',
+                error: 'Transaction Failed'
+            });
+            const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
+            return res.data;
         }
         else {
-            return 'not Mainnet'
+            return 'Not Mainnet'
         }
     }
     catch (error) {
@@ -54,7 +56,8 @@ const deposit = async (amount_) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
+        const result = await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
+        return result
     } catch (error) {
         console.log(error);
     }

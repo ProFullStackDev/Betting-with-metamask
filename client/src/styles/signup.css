@@ -135,6 +135,7 @@
     border-radius: 20px;
     z-index: 1;
     border: 0;
+    color: white;
     margin-top: 3vh;
     margin-bottom: 3vh;
 }
@@ -175,11 +176,14 @@
 }
 
 @media (max-width:900px) {
+    .signup{
+        padding-top: 25vh;
+    }
     .signup-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 10vw;
+        gap: 1vh;
         align-items: center;
     }
 }

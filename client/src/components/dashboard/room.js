@@ -51,7 +51,12 @@ const Room = (props) => {
           <div className={props.roomImg} />
         </div>
         <div className="invest-text">Game Room</div>
-        <div className="text-price">${props.value}</div>
+        {
+          props.value === 0.5 ?
+            <div className="text-price">$0.50</div>
+            :
+            <div className="text-price">${props.value}</div>
+        }
         <div className="play-button" onClick={handleClick}>
           Play Now
         </div>
