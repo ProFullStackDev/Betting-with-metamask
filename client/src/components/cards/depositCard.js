@@ -20,11 +20,12 @@ const DepositCard = () => {
         const btn = document.querySelector(".deposit-submit-button")
         btn.classList.add("button--loading");
         btn.classList.add('disabled')
-        await toast.promise(deposit(amount), {
-          loading: 'waiting...',
-          success: <b>Deposit Ended</b>,
-          error: <b>Deposit Failed</b>,
-        })
+        const message = await deposit(amount);
+        if (message.code)
+          toast.error(message.code)
+        else {
+          toast.success(message)
+        }
         btn.classList.remove("button--loading");
         btn.classList.remove("disabled")
         getBalance(dispatch);
@@ -40,7 +41,7 @@ const DepositCard = () => {
     <div className="card-info">
       <div className="deposit-card-content">
         <div className="input-form">
-          <input placeholder='Amount in USD' className='card-input-field' name="amount" onChange={handleChange} required />
+          <input type='number' placeholder='Amount in USD' className='card-input-field' name="amount" onChange={handleChange} required />
           <button className="deposit-submit-button" onClick={handleSubmit}>
             <div className='button-text'>Deposit</div>
           </button>

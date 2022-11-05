@@ -30,7 +30,7 @@ const getBuffer = (req, res) => {
 
 async function calcEtherToUsd(etherAmount) {
     const rate = await getEthereumPrice();
-    return Math.round(etherAmount * rate);
+    return Math.round(etherAmount * rate * 100) / 100;
 }
 
 async function calcUsdToEther(usdAmount) {

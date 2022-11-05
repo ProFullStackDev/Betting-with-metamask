@@ -17,10 +17,12 @@ const getMetamaskBalance = async (_address) => {
 const deposit = async (amount_) => {
     try {
         const rate = await getExchangeRate();
-        const amount = amount_ / rate;
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const amount = Math.round(amount_ / rate * 1000000) / 1000000;
+        const provider = new ethers.providers.Web3Provider(
+            window.ethereum
+        );
         const { chainId } = await provider.getNetwork();
-        if (chainId === 1) {
+        if (chainId === 5) {
             const signer = provider.getSigner();
             const gasPrice = await provider.getGasPrice();
             const estimateGas = await provider.estimateGas({
@@ -40,11 +42,11 @@ const deposit = async (amount_) => {
                 return res.data;
             }
             else {
-                return 'Not succed'
+                return 'Not succeed'
             }
         }
         else {
-            return 'not Mainnet'
+            return 'Not Mainnet'
         }
     }
     catch (error) {
@@ -54,7 +56,8 @@ const deposit = async (amount_) => {
 
 const withdraw = async (amount) => {
     try {
-        await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
+        const result = await axios.post('api/balance/withdraw', { amount: amount }, HEADER());
+        return result
     } catch (error) {
         console.log(error);
     }

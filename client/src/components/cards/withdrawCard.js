@@ -21,14 +21,15 @@ const WithdrawCard = () => {
         else {
             try {
                 const rate = await getExchangeRate();
+                const amount_ = Math.round(amount / rate * 1000000) / 1000000
                 const btn = document.querySelector(".withdraw-submit-button")
                 btn.classList.add("button--loading");
                 btn.classList.add("disabled");
-                await toast.promise(withdraw(amount / rate), {
-                    loading: 'waiting...',
-                    success: <b>Withdraw Ended</b>,
-                    error: <b>Withdraw Failed</b>,
-                })
+                const message = await withdraw(amount_);
+                if (message.status === 200)
+                    toast.success(message.data)
+                else
+                    toast.error(message.data);
                 btn.classList.remove("button--loading");
                 btn.classList.remove("disabled")
                 getBalance(dispatch);
@@ -42,7 +43,7 @@ const WithdrawCard = () => {
         <div className="card-info">
             <div className="deposit-card-content">
                 <div className="input-form">
-                    <input placeholder='Amount in USD' className='card-input-field' onChange={handleChange} required />
+                    <input type='number' placeholder='Amount in USD' className='card-input-field' onChange={handleChange} step='0.1' required />
                     <button className="withdraw-submit-button" onClick={handleClick}>
                         <div className='button-text'>Withdraw</div>
                     </button>

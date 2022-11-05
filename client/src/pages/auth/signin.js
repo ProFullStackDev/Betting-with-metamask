@@ -79,8 +79,6 @@ const SignIn = () => {
                     </div>
                 </form>
                 <div className='account-type-wrapper'>
-                    <div className="text-base">Welcome to WarWideWeb</div>
-                    <div className="text-white">Sign in your Account. Atque, fuga sapiente, doloribus qui enim tempora?</div>
                     <div className="row-content">
                         <div className="text-white">Don't you have Account yet? </div>
                         <div className="link-text" onClick={() => navigate('/signup')}>Sign Up</div>
