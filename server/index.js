@@ -6,6 +6,7 @@ const express = require('express');
 
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 
 const {
   get_Current_User,
@@ -27,28 +28,28 @@ app.use("/api", Routes);
 app.use(cors());
 
 //-------------
-// app.use(express.static(path.join(__dirname, 'build/')));
-// app.set('build', path.join(__dirname, 'build'))
-// app.set('view engine', 'html');
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'build/index.html'));
-// });
-// var privateKey = fs.readFileSync('../../certs/war.key', 'utf8');
-// var certificate = fs.readFileSync('../../certs/war.crt', 'utf8');
-// var credentials = { key: privateKey, cert: certificate };
+app.use(express.static(path.join(__dirname, 'build/')));
+app.set('build', path.join(__dirname, 'build'))
+app.set('view engine', 'html');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build/index.html'));
+});
+var privateKey = fs.readFileSync('../../certs/war.key', 'utf8');
+var certificate = fs.readFileSync('../../certs/war.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
 
 //-------------
 
-var http = require("http").createServer(app);
-let io = http.listen(PORT, () => {
-  console.log(`✅ Server is listening on port: ${PORT}`);
-});
+// var http = require("http").createServer(app);
+// let io = http.listen(PORT, () => {
+//   console.log(`✅ Server is listening on port: ${PORT}`);
+// });
 
-// var httpsServer = https.createServer(credentials, app);
-// httpsServer.listen(PORT, console.log("https: Server has started at port " + PORT));
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(PORT, console.log("https: Server has started at port " + PORT));
 
 
-const server = require("socket.io")(http,
+const server = require("socket.io")(httpsServer,
   {
     cors: {
       origin: "*",
@@ -67,6 +68,9 @@ server.on("connection", (socket) => {
     //* create user
     try {
       const p_user = join_User(socket.id, username, room);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
       socket.join(p_user.room);
       let allUsers = broadcastToRoomUsers(p_user.room);
       server.sockets.in(allUsers[0].room).emit("message", { users: allUsers });
@@ -98,8 +102,12 @@ server.on("connection", (socket) => {
   //when the user exits the room
   socket.on("discon", () => {
     try {
+      let p_user = get_Current_User(socket.id);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
       //the user is deleted from array of users and a left room message displayed
-      const p_user = user_Disconnect(socket.id);
+      p_user = user_Disconnect(socket.id);
 
       if (p_user) {
         socket.to(p_user.room).emit("discon", {
@@ -113,8 +121,10 @@ server.on("connection", (socket) => {
   });
   socket.on("writing", () => {
     try {
-      const p_user = get_Current_User(socket.id);
-
+      let p_user = get_Current_User(socket.id);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
       let allUsers;
       if (p_user) allUsers = broadcastToRoomUsers(p_user.room);
 
@@ -126,7 +136,10 @@ server.on("connection", (socket) => {
   socket.on("start", async ({ username, room }) => {
     // const p_user = join_User(socket.id, username, room);
     try {
-      const p_user = get_Current_User(socket.id);
+      let p_user = get_Current_User(socket.id);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
       let allUsers = broadcastToRoomUsers(p_user.room);
       if (validArray.findIndex((user) => user.id == p_user.id) == -1) {
         validArray.push(p_user);
@@ -142,7 +155,6 @@ server.on("connection", (socket) => {
           socket.to(allUsers[0].room).emit("startReq", { username });
         }
       }
-      console.log(validArray);
     } catch (error) {
       console.log(error);
     }
@@ -156,6 +168,9 @@ server.on("connection", (socket) => {
       let isSame = false;
       let success = false;
       const p_user = get_Current_User(socket.id);
+      if (p_user.room == undefined) {
+        p_user = join_User(socket.id, username, room);
+      }
       let allUsers = broadcastToRoomUsers(p_user.room);
 
       let userInfo = { user: username, value: bidValue };

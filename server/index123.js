@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'build/')));
 app.set('build', path.join(__dirname, 'build'))
 app.set('view engine', 'html');
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build/index.html'));
+  res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 var privateKey = fs.readFileSync('../../certs/war.key', 'utf8');
 var certificate = fs.readFileSync('../../certs/war.crt', 'utf8');

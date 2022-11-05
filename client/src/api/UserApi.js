@@ -2,6 +2,7 @@ import axios from "../utils/axios";
 import { ethers } from 'ethers';
 import { HEADER, GAME_ADDRESS } from '../constants';
 import { getExchangeRate } from "./balanceApi";
+import { toast } from "react-hot-toast";
 
 const getMetamaskBalance = async (_address) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -22,7 +23,7 @@ const deposit = async (amount_) => {
             window.ethereum
         );
         const { chainId } = await provider.getNetwork();
-        if (chainId === 5) {
+        if (chainId === 1) {
             const signer = provider.getSigner();
             const gasPrice = await provider.getGasPrice();
             const estimateGas = await provider.estimateGas({
@@ -36,14 +37,13 @@ const deposit = async (amount_) => {
                 value: ethers.utils.parseEther(amount.toString()),
             };
             const transaction = await signer.sendTransaction(tx);
-            const result = await transaction.wait();
-            if (result.status === 1) {
-                const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
-                return res.data;
-            }
-            else {
-                return 'Not succeed'
-            }
+            await toast.promise(transaction.wait(), {
+                loading: 'waiting for transaction...',
+                success: 'Transaction Ended',
+                error: 'Transaction Failed'
+            });
+            const res = await axios.post('api/balance/deposit', { amount: amount }, HEADER());
+            return res.data;
         }
         else {
             return 'Not Mainnet'

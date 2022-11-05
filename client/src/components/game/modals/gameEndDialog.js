@@ -8,6 +8,7 @@ import { SET_WINNER } from "../../../store/action/constants";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import "../../../styles/modal.css";
+import toast from "react-hot-toast";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +25,7 @@ export default function AlertDialogSlide(datas) {
   let price = "";
   let isWinner = false;
   let isSame = false;
+  let roomFee = datas.roomFee;
   // let winner = (datas.data.winner.user === undefined) ? "winner" : datas.data.winner.user;
   if (datas.data.winner !== undefined) {
     winner = datas.data.winner.user;
@@ -34,6 +36,12 @@ export default function AlertDialogSlide(datas) {
     isWinner = winner === username ? true : false;
     isSame = winnerValue === loserValue ? true : false;
   }
+  const balance = useSelector((state) => state.getBalance);
+  const winnerOldBalance = Math.round((balance - roomFee) * 100) / 100;
+  const loserOldBalance = Math.round((balance + roomFee) * 100) / 100;
+
+  const winnerBalanceDescription = " Balance : " + `${balance}` + "$" + " = " + `${winnerOldBalance}` + "$ + " + `${roomFee}` + "$";
+  const loserBalanceDescription = " Balance : " + `${balance}` + "$" + " = " + `${loserOldBalance}` + "$ - " + `${roomFee}` + "$";
 
   const handleClose = () => {
     dispatch({ type: SET_WINNER, payload: false });
@@ -67,8 +75,8 @@ export default function AlertDialogSlide(datas) {
             {isSame
               ? "Draw"
               : username === winner
-                ? "Congratulations! You win"
-                : " You Lost"}
+                ? "You win"
+                : "You lost"}
           </div>
         </div>
         <DialogContent>
@@ -85,6 +93,7 @@ export default function AlertDialogSlide(datas) {
                   ? loser + " set value: " + loserValue
                   : winner + " set value: " + winnerValue}{" "}
               </div>
+              <div className="dialog-balance">{isSame ? "" : isWinner ? winnerBalanceDescription : loserBalanceDescription}</div>
             </div>
           </div>
         </DialogContent>

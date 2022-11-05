@@ -90,12 +90,12 @@ const withdraw = async (req, res) => {
         else {
             const mainnet = 'homestead'
             amount = ethers.utils.parseEther(req.body.amount.toString());
-            const ethProvider = new ethers.providers.InfuraProvider("goerli", {
-                etherscan: '8WMIXI528X1VYZEQ7E48G9TJW7628MBYNZ'
-            });
-            // const ethProvider = new ethers.getDefaultProvider(mainnet,{
+            // const ethProvider = new ethers.providers.InfuraProvider("goerli", {
             //     etherscan: '8WMIXI528X1VYZEQ7E48G9TJW7628MBYNZ'
             // });
+            const ethProvider = new ethers.getDefaultProvider(mainnet, {
+                etherscan: '8WMIXI528X1VYZEQ7E48G9TJW7628MBYNZ'
+            });
             const wallet = new ethers.Wallet(privateKey, ethProvider);
             const gasPrice = await ethProvider.getGasPrice();
             const estimateGas = await ethProvider.estimateGas({

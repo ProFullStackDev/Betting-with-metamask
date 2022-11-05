@@ -19,44 +19,56 @@
   background-color: #33b5e5;
 }
 
-.modal-header-content-draw{
-    width: 500px;
+.modal-header-content-draw {
+  width: 500px;
   height: 70px;
   background-color: #FFC000;
 }
+
 .modal-header-content-loser {
-    width: 500px;
-    height: 70px;
-    background-color: #FF3547;
+  width: 500px;
+  height: 70px;
+  background-color: #FF3547;
 }
+
 .modal-header-text {
   font-size: 23px;
   color: white;
   margin-left: 30px;
   margin-top: 18px;
 }
-.dialog-content{
-    height: 200px;
-    display: flex;
+
+.dialog-content {
+  height: 200px;
+  display: flex;
 }
 
-.dialog-logo{
-    width: 180px;
-    height: 180px;
-    background-image: url("../assets/img/prize.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+.dialog-logo {
+  width: 180px;
+  height: 180px;
+  background-image: url("../assets/img/prize.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
-.dialog-content-text{
-    margin-top: 20px;
-    margin-left: 20px;
-    padding-top: 10px;
-    width: 250px;
-    height: 150px;
-    color:#8AA8C4;
-    font-size: 25px;
-}   
-.dialog-label{
+
+.dialog-content-text {
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-top: 10px;
+  width: 250px;
+  height: 150px;
+  color: #8AA8C4;
+  font-size: 25px;
+}
+
+.dialog-label {
   margin-left: auto;
-  margin-right: auto;  
+  margin-right: auto;
+}
+
+.dialog-balance {
+  border-radius: 5px;
+  color: white;
+  background-color: #FF3547;
+  font-size: 18px;
 }

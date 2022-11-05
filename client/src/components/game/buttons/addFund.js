@@ -22,11 +22,12 @@ const AddFund = () => {
             const btn = document.querySelector(".fund-deposit")
             btn.classList.add("button--loading--2");
             btn.classList.add('disabled')
-            await toast.promise(deposit(amount), {
-                loading: 'waiting...',
-                success: <b>Deposit Ended</b>,
-                error: <b>Deposit Failed</b>,
-            })
+            const message = await deposit(amount);
+            if (message.code)
+                toast.error(message.code)
+            else {
+                toast.success(message)
+            }
             btn.classList.remove("button--loading--2");
             btn.classList.remove('disabled');
             getBalance(dispatch);
